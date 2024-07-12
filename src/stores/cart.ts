@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import type { Product } from '@/products'
+import { computed, ref } from 'vue'
 import { useProductStore } from '@/stores/product'
-import { it } from 'vitest'
 
 
 interface PurchasedItem {
@@ -23,41 +21,59 @@ export interface CartItem {
   image: string,
 }
 
+
+const getCartFromLocalStorage = () => {
+  if (localStorage.getItem('cart')) {
+    return JSON.parse(localStorage.getItem('cart') as string ?? '')
+  }
+  return {}
+}
+
 const defaultCart = {
   contents: {} as Record<number, PurchasedItem>
 } satisfies Cart
 
 export const useCartStore = defineStore('cart', () => {
   const cartContent = ref<Cart>(defaultCart)
+  cartContent.value = getCartFromLocalStorage()
 
-  function addToCart(item: Product, count: number) {
+
+  function addToCart(itemId: number, count: number) {
     const cartItem: PurchasedItem = {
-      productId: item.id,
+      productId: itemId,
       quantity: count
     }
-    if (cartContent.value.contents[item.id]) {
-      cartContent.value.contents[item.id].quantity += count
+    if (cartContent.value.contents[itemId]) {
+      cartContent.value.contents[itemId].quantity += count
     } else {
-      cartContent.value.contents[item.id] = cartItem
+      cartContent.value.contents[itemId] = cartItem
     }
+
   }
 
-  function removeFromCart(item: Product, count: number) {
-    if (item.id in cartContent.value.contents) {
-      cartContent.value.contents[item.id].quantity -= count
-      if (cartContent.value.contents[item.id].quantity <= 0) {
-        delete cartContent.value.contents[item.id]
+  function removeFromCart(itemId: number, count: number) {
+
+    if (itemId in cartContent.value.contents) {
+      cartContent.value.contents[itemId].quantity -= count
+      if (cartContent.value.contents[itemId].quantity <= 0) {
+        delete cartContent.value.contents[itemId]
       }
     }
   }
 
-  function getCartCount() {
-    return Object.keys(cartContent.value.contents).reduce((acc: number, id: string) => {
-      return acc + cartContent.value.contents[Number(id)].quantity
-    }, 0)
+  function updateQuantity(itemId: number, count: number) {
+    if (itemId in cartContent.value.contents) {
+      cartContent.value.contents[itemId].quantity = count
+    }
   }
 
-  function getCartContent() {
+  const getCartCount = computed(() => {
+    return Object.keys(cartContent.value.contents).reduce((acc: number, id: string) => {
+      return acc + cartContent.value?.contents[Number(id)]?.quantity
+    }, 0)
+  })
+
+  const getCartContent = computed(() => {
     const { getProductById } = useProductStore()
     return Object.keys(cartContent.value.contents).map((productId: string) => {
       const currentItem = cartContent.value.contents[Number(productId)]
@@ -71,13 +87,14 @@ export const useCartStore = defineStore('cart', () => {
         totalPrice: currentItem.quantity * Number(productDetails?.price)
       }
     }) as CartItem[]
-  }
+  })
 
   return {
     cartContent,
     addToCart,
     removeFromCart,
     getCartCount,
-    getCartContent
+    getCartContent,
+    updateQuantity
   }
 })

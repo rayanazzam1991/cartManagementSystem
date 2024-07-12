@@ -3,15 +3,20 @@ import { TrashIcon } from '@heroicons/vue/24/outline'
 import { computed, ref } from 'vue'
 import NumberInput from '@/components/basic/NumberInput.vue'
 import type { CartItem } from '@/stores/cart'
+import CartLoader from '@/components/CartLoader.vue'
 
 const props = defineProps<{
   items: CartItem[]
+  productsLoading: boolean
 }>()
 const emit = defineEmits<{
   (e: 'removeItem', itemId: number, quantity: number): void
+  (e: 'updateQuantity', itemId: number, count: number): void
 }>()
 
 const shippingFeesAmount = 40
+const taxesAmount = 10
+const discount  = ref(0)
 
 const subtotal = computed(() => {
   return Number(props.items.reduce((acc: number, item: CartItem) => {
@@ -19,37 +24,51 @@ const subtotal = computed(() => {
   }, 0)).toFixed(2)
 })
 const total = computed(() => {
-  return Number(subtotal.value + shippingFeesAmount).toFixed(2)
+  let totalBeforeTaxes = Number(Number(subtotal.value) + shippingFeesAmount)
+  let totalAfterTax =  Number(totalBeforeTaxes * (1 + (taxesAmount / 100)))
+  return (totalAfterTax - discount.value).toFixed(2);
 })
 const removeItemFromCart = (itemId: number, quantity: number) => {
   emit('removeItem', itemId, quantity)
+}
+const updateItemQuantity = (itemId: number, count: number) => {
+  emit('updateQuantity', itemId, count)
+}
+const couponNumber = ref()
+const applyCoupon = ()=>{
+  discount.value = 50
 }
 </script>
 
 <template>
   <div class="cart-page-title">Cart items</div>
-  <div class="cart-wrapper">
+  <CartLoader v-if="props.productsLoading" />
+  <div v-else class="cart-wrapper">
     <div class="cart-items">
-      <div class="cart-item-card"
-           v-for="(item,index) in props.items"
-      >
-        <div class="cart-item-image">
-          <img :src="item.image" :alt="item.title" width="128" />
-        </div>
-        <div class="cart-item-details">
-          <div class="cart-item-detail-left">
-            <div class="cart-item-detail-title">{{ item.title }}</div>
-            <div class="cart-item-detail-unit-price">{{ item.unitPrice }}$</div>
-            <div class="cart-item-detail-qty">
-              <NumberInput :value="item.quantity" />
+      <TransitionGroup name="cart-items" tag="div">
+        <div class="cart-item-card"
+             v-for="(item) in props.items"
+             :key="item.id"
+        >
+          <div class="cart-item-image">
+            <img :src="item.image" :alt="item.title" width="128" />
+          </div>
+          <div class="cart-item-details">
+            <div class="cart-item-detail-left">
+              <div class="cart-item-detail-title">{{ item.title }}</div>
+              <div class="cart-item-detail-unit-price">{{ item.unitPrice }}$</div>
+              <div class="cart-item-detail-qty">
+                <NumberInput :model-value="item.quantity"
+                             @update:modelValue="(count:number)=>updateItemQuantity(item.id,count)" />
+              </div>
+            </div>
+            <div class="cart-item-detail-right">
+              <div class="cart-item-detail-total-price">Total: {{ Number(item.totalPrice).toFixed(2) }}$</div>
+              <TrashIcon class="cart-item-remove-icon" @click.prevent="removeItemFromCart(item.id,item.quantity)" />
             </div>
           </div>
-          <div class="cart-item-detail-right">
-            <div class="cart-item-detail-total-price">Total: {{ item.totalPrice }}$</div>
-            <TrashIcon class="cart-item-remove-icon" @click.prevent="removeItemFromCart(item.id,item.quantity)" />
-          </div>
         </div>
-      </div>
+      </TransitionGroup>
     </div>
     <div class="cart-summary">
       <div class="cart-summary-title">Order Summary</div>
@@ -62,19 +81,52 @@ const removeItemFromCart = (itemId: number, quantity: number) => {
 
           <div class="cart-summary-item">
             <span class="cart-summary-item-label">Shipping Fees</span>
-            <span class="cart-summary-item-value">40$</span>
+            <span class="cart-summary-item-value">{{ shippingFeesAmount }}$</span>
+          </div>
+          <div class="cart-summary-item">
+            <span class="cart-summary-item-label">Taxes</span>
+            <span class="cart-summary-item-value">{{ taxesAmount }}%</span>
+          </div>
+          <div class="separator"></div>
+          <div class="cart-summary-item">
+            <div class="cart-summary-coupon-label">
+              Do you have coupon?
+            </div>
+          </div>
+          <div class="cart-summary-item">
+            <div class="cart-summary-coupon-input-wrapper">
+                <input class="cart-summary-coupon-input" type="text" v-model="couponNumber">
+              <div class="cart-summary-coupon-apply-wrapper">
+                <div class="cart-summary-coupon-apply-button">
+                  <button @click.prevent="applyCoupon" class="btn btn-secondary hover:text-amber-50"> Apply Coupon</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="separator"></div>
         <div class="cart-summary-total">
           <div class="cart-summary-total-item">
             <span class="cart-summary-total-label">Total amount</span>
             <span class="cart-summary-total-value">{{ total }}$</span>
           </div>
           <div class="cart-summary-checkout-button">
-            <button class="button button-primary">Proceed to checkout</button>
+            <button class="btn btn-primary">Proceed to checkout</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+<style scoped>
+.cart-items-enter-active,
+.cart-items-leave-active {
+  transition: all 0.5s ease;
+}
+
+.cart-items-enter-from,
+.cart-items-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>

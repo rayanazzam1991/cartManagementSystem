@@ -4,11 +4,14 @@ import { products as ProductsList, type Product } from '@/products'
 
 export const useProductStore = defineStore('product', () => {
   const products = ref<Product[]>([] as Product[])
+  const loading = ref(false)
 
   async function getProductsFromApi() {
+    loading.value = true
     return setTimeout(() => {
       products.value = ProductsList
-    }, 500)
+      loading.value = false
+    }, 1500)
   }
 
   function getProductById(id: number) {
@@ -17,6 +20,7 @@ export const useProductStore = defineStore('product', () => {
 
   return {
     products,
+    loading,
     getProductsFromApi,
     getProductById
   }

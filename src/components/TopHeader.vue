@@ -15,7 +15,7 @@ const cartStore = useCartStore()
     <div class="top-right">
       <div class="top-cart-icon-wrapper">
         <ShoppingBagIcon class="top-cart-icon" @click="router.push({path:'/cart'})" />
-        <span class="top-cart-count-badge">{{ cartStore.getCartCount() }}</span>
+        <span class="top-cart-count-badge">{{ cartStore.getCartCount }}</span>
       </div>
     </div>
   </div>
