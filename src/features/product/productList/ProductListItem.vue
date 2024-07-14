@@ -51,7 +51,7 @@ const { showDetails, addToCart } = useProductItem()
               :key="star"
               class="product-item-star-icon-button"
               :class="[
-              star <= (product.rating.rate) ? 'rated-star' : 'not-rated-star',
+              product.rating && star <= (product.rating.rate) ? 'rated-star' : 'not-rated-star',
             ]"
             >
               <StarIcon class="product-item-star-icon" />
