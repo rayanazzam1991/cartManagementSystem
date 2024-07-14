@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { TrashIcon } from '@heroicons/vue/24/outline'
-import { computed, reactive, ref } from 'vue'
 import NumberInput from '@/components/element/NumberInput.vue'
 import type { CartItem } from '@/features/cart/cart'
 import CartLoader from '@/features/cart/components/CartDetailsLoader.vue'
-import { useToast } from '@/composables/useToast'
 import { useCartDetails } from '@/features/cart/useCartManagement'
 
 const props = defineProps<{
@@ -18,14 +16,14 @@ const emit = defineEmits<{
 
 const {
   subtotal,
-  total,
-  removeItemFromCart,
-  updateItemQuantity,
-  applyCoupon,
-  shippingFeesAmount,
-  taxesAmount,
-  couponNumber
-} = useCartDetails(props.items, emit)
+    total,
+    removeItemFromCart,
+    updateItemQuantity,
+    applyCoupon,
+    shippingFeesAmount,
+    taxesAmount,
+    couponNumber
+} = useCartDetails(props,emit)
 </script>
 
 <template>

@@ -26,7 +26,7 @@ const getCartFromLocalStorage = () => {
   if (localStorage.getItem('cart')) {
     return JSON.parse(localStorage.getItem('cart') as string ?? '')
   }
-  return {}
+  return defaultCart
 }
 
 const defaultCart = {
@@ -43,6 +43,7 @@ export const useCartStore = defineStore('cart', () => {
       productId: itemId,
       quantity: count
     }
+    console.log("cartContent", cartContent.value)
     if (cartContent.value.contents[itemId]) {
       cartContent.value.contents[itemId].quantity += count
     } else {
@@ -67,6 +68,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const getCartCount = computed(() => {
+    if(!cartContent.value.contents) return 0;
     return Object.keys(cartContent.value.contents).reduce((acc: number, id: string) => {
       return acc + cartContent.value?.contents[Number(id)]?.quantity
     }, 0)

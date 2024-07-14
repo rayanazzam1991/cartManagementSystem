@@ -41,7 +41,7 @@ export const useCartManagement = () => {
 }
 
 export const useCartDetails = (
-  items: CartItem[],
+  props: any,
   emit: ReturnType<typeof defineEmits>) => {
 
   const shippingFeesAmount = 40
@@ -58,13 +58,13 @@ export const useCartDetails = (
   ])
 
   const subtotal = computed(() => {
-    return Number(items.reduce((acc: number, item: CartItem) => {
+    return Number(props.items.reduce((acc: number, item: CartItem) => {
       return acc + item.totalPrice
     }, 0)).toFixed(2)
   })
   const total = computed(() => {
-    let totalBeforeTaxes = Number(Number(subtotal.value) + shippingFeesAmount)
-    let totalAfterTax = Number(totalBeforeTaxes * (1 + (taxesAmount / 100)))
+    const totalBeforeTaxes = Number(Number(subtotal.value) + shippingFeesAmount)
+    const totalAfterTax = Number(totalBeforeTaxes * (1 + (taxesAmount / 100)))
     return (totalAfterTax - discount.value).toFixed(2)
   })
   const removeItemFromCart = (itemId: number, quantity: number) => {
@@ -75,8 +75,8 @@ export const useCartDetails = (
   }
   const couponNumber = ref()
   const applyCoupon = () => {
-    let validCoupon = coupons.find((item) => item.value === couponNumber.value)
-    if (!!validCoupon) {
+    const validCoupon = coupons.find((item) => item.value === couponNumber.value)
+    if (validCoupon) {
       discount.value = validCoupon.discount
       toast?.dismissAll()
       toast?.success('Coupon applied to total!')

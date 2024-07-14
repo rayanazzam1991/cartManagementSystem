@@ -46,6 +46,7 @@ export async function createApp() {
 
 createApp().then(async (cms) => {
   // finally mount the app to the DOM
+  cms.app.use(cms.router)
   cms.app.mount('#app')
 })
 

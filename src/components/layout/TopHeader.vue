@@ -22,7 +22,7 @@ watch(() => cartStore.getCartCount, () => {
       <div class="top-cart-icon-wrapper">
         <ShoppingBagIcon class="top-cart-icon" @click="router.push({path:'/cart'})" />
         <Transition name="bounce" mode="out-in">
-        <span class="top-cart-count-badge" :key="cartStore.getCartCount">
+        <span class="top-cart-count-badge" v-if="cartStore.getCartCount > 0" :key="cartStore.getCartCount">
         {{ cartStore.getCartCount }}
       </span>
         </Transition>
