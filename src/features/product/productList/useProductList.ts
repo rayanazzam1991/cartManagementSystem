@@ -1,7 +1,6 @@
 import { useProductStore } from '@/features/product/product'
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { Product } from '@/products'
 import { useRouter } from 'vue-router'
 import { convertToSlug } from '@/util/stringHelper'
 import { useCartStore } from '@/features/cart/cart'

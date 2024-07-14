@@ -11,10 +11,11 @@ const props = defineProps<{
 
 <template>
   <div class="product-list">
-    <ProductItemLoader
-      v-if="props.productsLoading"
-      :key="n"
-      v-for="n in 6" />
+    <template v-if="props.productsLoading">
+      <ProductItemLoader
+        :key="n"
+        v-for="n in 6" />
+    </template>
     <ProductListItem
       v-for="(item,index) in props.productsList"
       :product="item"
