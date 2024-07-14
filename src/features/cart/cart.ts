@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useProductStore } from '@/stores/product'
+import { useProductStore } from '@/features/product/product'
 
 
 interface PurchasedItem {
@@ -38,7 +38,7 @@ export const useCartStore = defineStore('cart', () => {
   cartContent.value = getCartFromLocalStorage()
 
 
-  function addToCart(itemId: number, count: number) {
+  function addToCart(itemId: number, count: number = 1) {
     const cartItem: PurchasedItem = {
       productId: itemId,
       quantity: count
@@ -52,7 +52,6 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   function removeFromCart(itemId: number, count: number) {
-
     if (itemId in cartContent.value.contents) {
       cartContent.value.contents[itemId].quantity -= count
       if (cartContent.value.contents[itemId].quantity <= 0) {
@@ -73,11 +72,11 @@ export const useCartStore = defineStore('cart', () => {
     }, 0)
   })
 
-  const getCartContent = computed(() => {
-    const { getProductById } = useProductStore()
-    return Object.keys(cartContent.value.contents).map((productId: string) => {
+  function getCartContent() {
+    const productStore = useProductStore()
+    return  Object.keys(cartContent.value.contents).map((productId: string) => {
       const currentItem = cartContent.value.contents[Number(productId)]
-      const productDetails = getProductById(Number(currentItem.productId))
+      const productDetails = productStore.getProductById(Number(currentItem.productId))
       return {
         id: currentItem.productId,
         image: productDetails?.image,
@@ -87,7 +86,8 @@ export const useCartStore = defineStore('cart', () => {
         totalPrice: currentItem.quantity * Number(productDetails?.price)
       }
     }) as CartItem[]
-  })
+  }
+
 
   return {
     cartContent,

@@ -41,16 +41,10 @@ export async function createApp() {
       console.error(error)
     }
   }
-
-  // use router after plugin registration, so we can register navigation guards
-  app.use(cms.router)
-
   return cms
 }
 
 createApp().then(async (cms) => {
-  // wait for the app to be ready
-  await cms.router.isReady()
   // finally mount the app to the DOM
   cms.app.mount('#app')
 })

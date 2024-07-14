@@ -1,6 +1,8 @@
 <template>
   <div class="product-item">
-    <div class="shimmerBG media"></div>
+    <div class="product-item-image-wrapper">
+      <div class="shimmerBG media"></div>
+    </div>
     <div class="product-item-content-wrapper">
       <div class="shimmerBG product-item-title title-line"></div>
       <div class="shimmerBG product-item-description content-line m-t-24"></div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '@/products'
-import ProductListItem from '@/components/ProductListItem.vue'
-import ProductItemLoader from '@/components/ProductItemLoader.vue'
+import ProductListItem from '@/features/product/productList/ProductListItem.vue'
+import ProductItemLoader from '@/features/product/productList/ProductItemLoader.vue'
 
 const props = defineProps<{
   productsList: Product[] | null,
@@ -12,7 +12,7 @@ const props = defineProps<{
 <template>
   <div class="product-list">
     <ProductItemLoader
-      v-show="props.productsLoading"
+      v-if="props.productsLoading"
       :key="n"
       v-for="n in 6" />
     <ProductListItem

@@ -1,34 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import type { Product } from '@/products'
-/*
-These are Icons that you can use, of course you can use other ones if you prefer.
-*/
 import { EyeIcon, StarIcon, ShoppingBagIcon } from '@heroicons/vue/24/solid'
-import { useCartStore } from '@/stores/cart'
-import { useRouter } from 'vue-router'
-import { convertToSlug, truncateString } from '@/util/stringHelper'
-import { useToast } from '@/composables/useToast'
+import { truncateString } from '@/util/stringHelper'
+import { useProductItem } from '@/features/product/productList/useProductList'
 
 const props = defineProps<{
   product: Product,
   index?: number
 }>()
 
-const router = useRouter()
-
-const showDetails = (productId: number, productName: string) => {
-  const productSlug = convertToSlug(productName)
-  router.push({ name: 'product.details', params: { id: productId, slug: productSlug } })
-}
-const cartStore = useCartStore()
-const toast = useToast()
-
-const addToCart = (itemId: number) => {
-  cartStore.addToCart(itemId, 1)
-  toast?.dismissAll()
-  toast.success('Added to Cart Successfully')
-}
+const { showDetails, addToCart } = useProductItem()
 </script>
 
 <template>
@@ -36,7 +17,7 @@ const addToCart = (itemId: number) => {
   <div class="product-item group">
     <div class="product-item-image-wrapper">
       <img
-        v-if="product?.image"
+        v-if="product.image"
         :src="product.image"
         class="product-item-image"
         :alt="product.title"
@@ -90,7 +71,7 @@ const addToCart = (itemId: number) => {
           class="product-item-action-show-button"
           @click="showDetails(props.product?.id,props.product.title)"
         >
-          <EyeIcon/>
+          <EyeIcon />
         </button>
       </div>
     </div>

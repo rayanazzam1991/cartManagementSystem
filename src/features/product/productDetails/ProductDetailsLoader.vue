@@ -1,20 +1,23 @@
 <template>
-  <div class="product-item-detail mx-auto w-full px-16">
-    <div class="h-[420px] relative flex items-center justify-center overflow-hidden basis-full md:basis-2/3">
-      <div class="shimmerBG media"></div>
-    </div>
-    <div class="product-item-detail-content-wrapper">
-      <div class="shimmerBG product-item-title title-line"></div>
-      <div class="shimmerBG product-item-description content-line mt-16"></div>
-      <div class="shimmerBG product-item-title title-line end mt-12"></div>
+  <div class="product-item-detail">
+    <div class="product-item-main">
+      <div class="h-[420px] relative flex items-center justify-center overflow-hidden basis-full md:basis-[calc(50%_-_1rem)]">
+        <div class="shimmerBG media"></div>
+      </div>
+      <div class="product-item-detail-content-wrapper basis-full md:basis-[calc(50%_-_1rem)]">
+        <div class="shimmerBG product-item-title title-line"></div>
+        <div class="shimmerBG product-item-description content-line mt-16"></div>
+        <div class="shimmerBG product-item-title title-line end mt-12"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.product-item-detail{
+.product-item-detail {
   max-width: 100%;
 }
+
 .product-item-detail .shimmerBG {
   width: 100%;
   height: 100%;
@@ -48,7 +51,7 @@
 
 .product-item-detail .media {
   height: 450px;
-  width: 90%;
+  width: 100%;
 }
 
 .product-item-detail .title-line {
@@ -73,6 +76,6 @@
 
 </style>
 <script setup lang="ts">
-import NumberInput from '@/components/basic/NumberInput.vue'
+import NumberInput from '@/components/element/NumberInput.vue'
 import { StarIcon } from '@heroicons/vue/24/solid'
 </script>

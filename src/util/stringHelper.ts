@@ -7,7 +7,9 @@ export function convertToSlug(text: string) {
     .replace(/--+/g, '-')           // Replace multiple hyphens with a single hyphen
 }
 
-export function truncateString(str : string, maxLength = 150) {
+export function truncateString(str : string | undefined, maxLength = 150) {
+  if(str == undefined)
+    return '';
   if (str.length > maxLength) {
     return str.slice(0, maxLength) + '...';
   }
