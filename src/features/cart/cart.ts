@@ -8,7 +8,7 @@ interface PurchasedItem {
   quantity: number,
 }
 
-interface Cart {
+export interface CartContent {
   contents: Record<number, PurchasedItem>
 }
 
@@ -31,10 +31,10 @@ const getCartFromLocalStorage = () => {
 
 const defaultCart = {
   contents: {} as Record<number, PurchasedItem>
-} satisfies Cart
+} satisfies CartContent
 
 export const useCartStore = defineStore('cart', () => {
-  const cartContent = ref<Cart>(defaultCart)
+  const cartContent = ref<CartContent>(defaultCart)
   cartContent.value = getCartFromLocalStorage()
 
 
@@ -43,7 +43,6 @@ export const useCartStore = defineStore('cart', () => {
       productId: itemId,
       quantity: count
     }
-    console.log("cartContent", cartContent.value)
     if (cartContent.value.contents[itemId]) {
       cartContent.value.contents[itemId].quantity += count
     } else {

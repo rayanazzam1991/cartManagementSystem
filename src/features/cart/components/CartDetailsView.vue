@@ -3,10 +3,10 @@ import { TrashIcon } from '@heroicons/vue/24/outline'
 import NumberInput from '@/components/element/NumberInput.vue'
 import type { CartItem } from '@/features/cart/cart'
 import CartLoader from '@/features/cart/components/CartDetailsLoader.vue'
-import { useCartDetails } from '@/features/cart/useCartManagement'
+import { useCartDetails } from '@/features/cart/useCartHooks'
 
 const props = defineProps<{
-  items: CartItem[]
+  cartItems: CartItem[]
   productsLoading: boolean
 }>()
 const emit = defineEmits<{
@@ -16,18 +16,18 @@ const emit = defineEmits<{
 
 const {
   subtotal,
-    total,
-    removeItemFromCart,
-    updateItemQuantity,
-    applyCoupon,
-    shippingFeesAmount,
-    taxesAmount,
-    couponNumber
-} = useCartDetails(props,emit)
+  total,
+  removeItemFromCart,
+  updateItemQuantity,
+  applyCoupon,
+  shippingFeesAmount,
+  taxesAmount,
+  couponNumber
+} = useCartDetails(props, emit)
 </script>
 
 <template>
-  <div class="cart-no-items" v-if="props.items.length == 0">
+  <div class="cart-no-items" v-if="props.cartItems.length == 0">
     <span>No Items</span>
     <router-link class="btn btn-primary" :to="{path:'/'}">Go to Shop</router-link>
   </div>
@@ -38,7 +38,7 @@ const {
       <div class="cart-items">
         <TransitionGroup name="cart-items" tag="div">
           <div class="cart-item-card"
-               v-for="(item) in props.items"
+               v-for="(item) in props.cartItems"
                :key="item.id"
           >
             <div class="cart-item-image">

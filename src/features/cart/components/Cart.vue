@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import CartDetailsView from '@/features/cart/components/CartDetailsView.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
-import { useCartManagement } from '@/features/cart/useCartManagement'
+import { useCart } from '@/features/cart/useCartHooks'
 
-const { items, productsLoading, handleRemoveItem, handleUpdateQuantity } = useCartManagement()
+const { cartItems, productsLoading, handleRemoveItem, handleUpdateQuantity } = useCart()
 </script>
 
 <template>
   <PageLayout>
     <CartDetailsView
-      :items
+      :cartItems
       :productsLoading
       @removeItem="handleRemoveItem"
       @updateQuantity="handleUpdateQuantity"

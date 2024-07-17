@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useProductStore } from '@/features/product/product'
 import { computed, onBeforeMount, reactive, ref } from 'vue'
 
-export const useCartManagement = () => {
+export const useCart = () => {
   const cartStore = useCartStore()
   const toast = useToast()
   const { loading: productsLoading } = storeToRefs(useProductStore())
@@ -29,11 +29,11 @@ export const useCartManagement = () => {
       toast?.success('Cart Updated Successfully')
     }, 500)
   }
-  const items = computed(() => {
+  const cartItems = computed(() => {
     return cartStore.getCartContent()
   })
   return {
-    items,
+    cartItems,
     productsLoading,
     handleRemoveItem,
     handleUpdateQuantity
