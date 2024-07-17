@@ -3,7 +3,7 @@ import { computed, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { convertToSlug } from '@/util/stringHelper'
-import { useCartStore } from '@/features/cart/cart'
+import { useCartStore } from '@/features/cart/cartStore'
 import { useToast } from '@/composables/useToast'
 
 export const useProductList = () => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TopHeader from '@/components/layout/TopHeader.vue'
-import { useCartStore } from '@/features/cart/cart'
+import { useCartStore } from '@/features/cart/cartStore'
 import { useProductStore } from '@/features/product/product'
 import { onBeforeMount } from 'vue'
 

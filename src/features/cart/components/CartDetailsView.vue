@@ -1,29 +1,35 @@
 <script setup lang="ts">
 import { TrashIcon } from '@heroicons/vue/24/outline'
 import NumberInput from '@/components/element/NumberInput.vue'
-import type { CartItem } from '@/features/cart/cart'
 import CartLoader from '@/features/cart/components/CartDetailsLoader.vue'
-import { useCartDetails } from '@/features/cart/useCartHooks'
+import { cartViewDetailsUtil } from '@/features/cart/cartViewUtil'
+import type { CartItem } from '@/features/cart/cartStore'
 
-const props = defineProps<{
-  cartItems: CartItem[]
+export type CartDetailsViewProps = {
+  cartItems: CartItem[],
+  discount?: number,
   productsLoading: boolean
-}>()
-const emit = defineEmits<{
+}
+export type CartDetailsViewEmits = {
   (e: 'removeItem', itemId: number, quantity: number): void
   (e: 'updateQuantity', itemId: number, count: number): void
-}>()
+  (e: 'applyCoupon', couponNumber: number): void
+}
+
+const props = defineProps<CartDetailsViewProps>()
+const emit = defineEmits<CartDetailsViewEmits>()
 
 const {
   subtotal,
   total,
-  removeItemFromCart,
-  updateItemQuantity,
-  applyCoupon,
   shippingFeesAmount,
   taxesAmount,
-  couponNumber
-} = useCartDetails(props, emit)
+  couponNumber,
+  removeItemFromCart,
+  updateItemQuantity,
+  applyCoupon
+} = cartViewDetailsUtil(props, emit)
+
 </script>
 
 <template>

@@ -2,7 +2,7 @@
 import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import router from '@/router'
 import LogoSVG from '@/components/element/LogoSVG.vue'
-import { useCartStore } from '@/features/cart/cart'
+import { useCartStore } from '@/features/cart/cartStore'
 import { ref, watch } from 'vue'
 
 const cartStore = useCartStore()

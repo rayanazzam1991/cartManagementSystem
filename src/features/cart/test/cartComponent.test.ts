@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import CartDetailsView from '@/features/cart/components/CartDetailsView.vue'
-import * as cartHooks from '@/features/cart/useCartHooks'
+import * as cartHooks from '@/features/cart/useCart'
 import { computed, ref } from 'vue'
-import type { CartItem } from '@/features/cart/cart'
+import type { CartItem } from '@/features/cart/cartStore'
 import Cart from '@/features/cart/components/Cart.vue'
 
 const mockedCartItems = computed(() => {
@@ -18,27 +18,10 @@ const mockedCartItems = computed(() => {
   }] as CartItem[]
 })
 const mockedProductLoading = ref(false)
+const mockedDiscount = ref(0)
 
 const useCartSpy = vi.spyOn(cartHooks, 'useCart')
-const mockedSubtotal = computed(() => {
-  return '1.00'
-})
-const mockedTotal = computed(() => {
-  return '1.00'
-})
-const mockedCoupon = computed(() => {
-  return '12234'
-})
-vi.spyOn(cartHooks, 'useCartDetails').mockReturnValue({
-  subtotal: mockedSubtotal,
-  total: mockedTotal,
-  removeItemFromCart: vi.fn(),
-  updateItemQuantity: vi.fn(),
-  applyCoupon: vi.fn(),
-  shippingFeesAmount: 0,
-  taxesAmount: 0,
-  couponNumber: mockedCoupon
-})
+
 describe('Cart', () => {
 
   let wrapper: VueWrapper<InstanceType<typeof Cart>>
@@ -51,13 +34,14 @@ describe('Cart', () => {
     wrapper = mount(Cart)
     expect(wrapper.exists()).toBe(true)
   })
-
   it('should have CartDetailsView with correct props', () => {
     useCartSpy.mockReturnValue({
       cartItems: mockedCartItems,
       productsLoading: mockedProductLoading,
+      discount: mockedDiscount,
       handleRemoveItem: vi.fn(),
-      handleUpdateQuantity: vi.fn()
+      handleUpdateQuantity: vi.fn(),
+      handleCoupon:vi.fn()
     })
     wrapper = mount(Cart)
     const cartDetailsViewComponent = wrapper.findComponent(CartDetailsView)

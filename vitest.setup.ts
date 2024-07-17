@@ -1,6 +1,6 @@
 import {beforeEach,vi} from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import * as Toast from "@/composables/useToast";
+import * as Toast from '@/composables/useToast'
 
 beforeEach(()=>{
   setActivePinia(createPinia())
