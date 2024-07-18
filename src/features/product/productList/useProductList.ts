@@ -1,4 +1,4 @@
-import { useProductStore } from '@/features/product/product'
+import { useProductStore } from '@/features/product/productStore'
 import { computed, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -14,8 +14,8 @@ export const useProductList = () => {
     return productStore.products
   })
 
-  onBeforeMount(async () => {
-    await productStore.getProductsFromApi()
+  onBeforeMount( () => {
+     productStore.getProductsFromApi()
   })
   return {
     productsList,
@@ -36,7 +36,7 @@ export const useProductItem = () => {
   const addToCart = (itemId: number) => {
     cartStore.addToCart(itemId)
     toast?.dismissAll()
-    toast.success('Added to Cart Successfully')
+    toast?.success('Added to Cart Successfully')
   }
   return {
     showDetails,

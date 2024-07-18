@@ -39,7 +39,7 @@ describe('useCart', () => {
       expect(toast?.warning).toHaveBeenCalledWith('Removed from cart Successfully')
     }, 500)
   })
-  //
+
   it('handles updating item quantity in cart', () => {
 
     cartStore.updateQuantity = vi.fn()

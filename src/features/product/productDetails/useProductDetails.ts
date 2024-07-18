@@ -1,5 +1,5 @@
 import { type RouteParams, useRoute } from 'vue-router'
-import { useProductStore } from '@/features/product/product'
+import { useProductStore } from '@/features/product/productStore'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useToast } from '@/composables/useToast'

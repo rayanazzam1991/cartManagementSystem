@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TopHeader from '@/components/layout/TopHeader.vue'
 import { useCartStore } from '@/features/cart/cartStore'
-import { useProductStore } from '@/features/product/product'
+import { useProductStore } from '@/features/product/productStore'
 import { onBeforeMount } from 'vue'
 
 const productStore = useProductStore()

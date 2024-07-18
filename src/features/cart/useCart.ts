@@ -1,7 +1,7 @@
 import { type CartItem, useCartStore } from '@/features/cart/cartStore'
 import { useToast } from '@/composables/useToast'
 import { storeToRefs } from 'pinia'
-import { useProductStore } from '@/features/product/product'
+import { useProductStore } from '@/features/product/productStore'
 import { computed, onBeforeMount, reactive, ref } from 'vue'
 
 

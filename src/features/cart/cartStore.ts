@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useProductStore } from '@/features/product/product'
+import { useProductStore } from '@/features/product/productStore'
 
 
 interface PurchasedItem {
