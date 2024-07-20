@@ -1,9 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { mount, VueWrapper } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
+import { mount } from '@vue/test-utils'
 import ProductsListView from '@/features/product/productList/ProductsListView.vue'
-import * as ProductListComposable from '@/features/product/productList/useProductList'
 import type { Product } from '@/products'
-import ProductList from '@/features/product/productList/ProductList.vue'
 import ProductItemLoader from '@/features/product/productList/ProductItemLoader.vue'
 import ProductListItem from '@/features/product/productList/ProductListItem.vue'
 
@@ -33,9 +31,6 @@ const ProductListSample: Product[] = [
     }
   }
 ]
-const mockedLoading = true
-
-
 describe('ProductListView  Component', () => {
 
   it('Should render productListView component without crashing', () => {

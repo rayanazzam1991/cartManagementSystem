@@ -11,7 +11,6 @@ vi.mock('@/components/element/NumberInput.vue', () => ({
 
 describe('ProductItemDetail.vue', () => {
   let productSample: any
-  let mockEmit: any
 
   beforeEach(() => {
     productSample = {
@@ -24,7 +23,6 @@ describe('ProductItemDetail.vue', () => {
       rating: { rate: 4.5, count: 10 }
     }
 
-    mockEmit = vi.fn()
   })
 
   it('renders without crashing', () => {
@@ -68,7 +66,7 @@ describe('ProductItemDetail.vue', () => {
   })
 
   it('correctly reflects the rating with star icons', () => {
-    const wrapper = mount(ProductDetailsView, {
+     mount(ProductDetailsView, {
       props: {
         product: productSample
       }

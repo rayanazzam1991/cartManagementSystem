@@ -1,10 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import CartDetailsView from '@/features/cart/components/CartDetailsView.vue'
 import * as cartHooks from '@/features/cart/useCart'
 import { computed, ref } from 'vue'
 import type { CartItem } from '@/features/cart/cartStore'
-import Cart from '@/features/cart/components/Cart.vue'
+import Cart from '@/features/cart/components/CartDetails.vue'
 
 const mockedCartItems = computed(() => {
   return [{

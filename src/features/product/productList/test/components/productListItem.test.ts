@@ -1,4 +1,4 @@
-import { describe, expect, it ,test} from 'vitest'
+import { describe, expect, it} from 'vitest'
 import { mount } from '@vue/test-utils'
 import ProductListItem from '@/features/product/productList/ProductListItem.vue'
 import type { Product } from '@/products'

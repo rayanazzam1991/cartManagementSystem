@@ -75,7 +75,3 @@
 }
 
 </style>
-<script setup lang="ts">
-import NumberInput from '@/components/element/NumberInput.vue'
-import { StarIcon } from '@heroicons/vue/24/solid'
-</script>

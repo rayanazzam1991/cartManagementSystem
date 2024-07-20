@@ -2,15 +2,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createTestingPinia, type TestingPinia } from '@pinia/testing'
 import { type CartItem, useCartStore } from '@/features/cart/cartStore'
 import { useCart } from '@/features/cart/useCart'
-import { shallowMount, type VueWrapper } from '@vue/test-utils'
+import { shallowMount} from '@vue/test-utils'
 import { computed } from 'vue'
-import  Cart from '@/features/cart/components/Cart.vue'
+import  Cart from '@/features/cart/components/CartDetails.vue'
 import { useToast } from '@/composables/useToast'
 
 describe('useCart', () => {
 
   let pinia: TestingPinia
-  let wrapper: VueWrapper<InstanceType<typeof Cart>>
   let cartStore :ReturnType<typeof useCartStore>
 
   beforeEach(() => {
@@ -21,7 +20,7 @@ describe('useCart', () => {
 
   it('fetches cart content on mount', () => {
     cartStore.getCartContent = vi.fn()
-    wrapper = shallowMount(Cart)
+    shallowMount(Cart)
     expect(cartStore.getCartContent).toHaveBeenCalledTimes(1)
   })
 

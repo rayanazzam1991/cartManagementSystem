@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils'
-import { useProductDetails } from '@/features/product/productDetails/useProductDetails'
 import { vi, describe, it, beforeEach, expect } from 'vitest'
 import type { Product } from '@/products'
 import * as ProductDetailsComposable from '@/features/product/productDetails/useProductDetails'

@@ -4,13 +4,11 @@ import { useRouter } from 'vue-router'
 import { useProductStore } from '@/features/product/productStore'
 import { useToast } from '@/composables/useToast'
 import { useCartStore } from '@/features/cart/cartStore'
-import { computed, ref } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
 import { convertToSlug } from '@/util/stringHelper'
 import * as Toast from '@/composables/useToast'
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ProductList from '@/features/product/productList/ProductList.vue'
-import ProductListItem from '@/features/product/productList/ProductListItem.vue'
 
 // Mocking vue-router
 vi.mock('vue-router', () => ({
@@ -30,18 +28,14 @@ vi.spyOn(Toast,"useToast").mockReturnValue({
 
 describe('useProductList', () => {
   let mockProducts: any
-  let mockLoading: any
   const pinia = createTestingPinia()
   let productStore : ReturnType<typeof useProductStore>
-  let cartStore : ReturnType<typeof useCartStore>
   beforeEach(() => {
     // Reset all mocks before each test
     vi.clearAllMocks()
 
     mockProducts = [{ id: 1, title: 'Product 1' }]
-    mockLoading = ref(false)
     productStore = useProductStore(pinia)
-    cartStore = useCartStore(pinia)
 
   })
 
@@ -66,10 +60,7 @@ describe('useProductList', () => {
 describe('useProductItem', () => {
   let router: any
 
-  let mockProducts: any
-  let mockLoading: any
   const pinia = createTestingPinia()
-  let productStore : ReturnType<typeof useProductStore>
   let cartStore : ReturnType<typeof useCartStore>
   beforeEach(() => {
     // Reset all mocks before each test
@@ -80,10 +71,6 @@ describe('useProductItem', () => {
     }
     //@ts-ignore
     useRouter.mockReturnValue(router)
-
-    mockProducts = [{ id: 1, title: 'Product 1' }]
-    mockLoading = ref(false)
-    productStore = useProductStore(pinia)
     cartStore = useCartStore(pinia)
 
   })

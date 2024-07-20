@@ -1,4 +1,4 @@
-import { type CartItem, useCartStore } from '@/features/cart/cartStore'
+import {  useCartStore } from '@/features/cart/cartStore'
 import { useToast } from '@/composables/useToast'
 import { storeToRefs } from 'pinia'
 import { useProductStore } from '@/features/product/productStore'

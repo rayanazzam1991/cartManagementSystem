@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useRoute } from 'vue-router'
 import { useProductStore } from '@/features/product/productStore'
 import { useToast } from '@/composables/useToast'
-import { ref } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
 import * as Toast from '@/composables/useToast'
 
@@ -25,7 +24,6 @@ vi.spyOn(Toast,"useToast").mockReturnValue({
 describe('useProductDetails', () => {
   let mockRouteParams: any
   let mockProduct: any
-  let mockProductLoading: any
   const pinia = createTestingPinia()
   let productStore : ReturnType<typeof useProductStore>
   beforeEach(() => {
@@ -38,7 +36,6 @@ describe('useProductDetails', () => {
     useRoute.mockReturnValue(mockRouteParams)
 
     mockProduct = { id: 1, title: 'Sample Product' }
-    mockProductLoading = ref(false)
 
     productStore =useProductStore(pinia)
 
