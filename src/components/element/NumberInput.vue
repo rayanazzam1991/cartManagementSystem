@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
+import { toRef } from 'vue'
 
 const props = defineProps<{
   modelValue: number
