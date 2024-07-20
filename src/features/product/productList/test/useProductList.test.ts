@@ -10,6 +10,7 @@ import { convertToSlug } from '@/util/stringHelper'
 import * as Toast from '@/composables/useToast'
 import { mount, shallowMount } from '@vue/test-utils'
 import ProductList from '@/features/product/productList/ProductList.vue'
+import ProductListItem from '@/features/product/productList/ProductListItem.vue'
 
 // Mocking vue-router
 vi.mock('vue-router', () => ({
@@ -55,7 +56,7 @@ describe('useProductList', () => {
     expect(productsLoading.value).toBe(false)
   })
 
-  it.only('fetches products on mount', async () => {
+  it('fetches products on mount', async () => {
     shallowMount(ProductList)
     expect(productStore.getProductsFromApi).toHaveBeenCalledTimes(1)
   })
@@ -64,9 +65,12 @@ describe('useProductList', () => {
 
 describe('useProductItem', () => {
   let router: any
-  let cartStore: any
-  let toast: any
 
+  let mockProducts: any
+  let mockLoading: any
+  const pinia = createTestingPinia()
+  let productStore : ReturnType<typeof useProductStore>
+  let cartStore : ReturnType<typeof useCartStore>
   beforeEach(() => {
     // Reset all mocks before each test
     vi.clearAllMocks()
@@ -74,19 +78,19 @@ describe('useProductItem', () => {
     router = {
       push: vi.fn()
     }
-
-    cartStore = {
-      addToCart: vi.fn()
-    }
-
-    toast = useToast()
-
+    //@ts-ignore
     useRouter.mockReturnValue(router)
-    useCartStore.mockReturnValue(cartStore)
+
+    mockProducts = [{ id: 1, title: 'Product 1' }]
+    mockLoading = ref(false)
+    productStore = useProductStore(pinia)
+    cartStore = useCartStore(pinia)
+
   })
 
+
   it('showDetails navigates to product details page', async () => {
-    const { showDetails } = useProductItem()
+    const { showDetails } = useProductItem(router)
     const productId = 1
     const productName = 'Product 1'
     const productSlug = convertToSlug(productName)
@@ -96,12 +100,12 @@ describe('useProductItem', () => {
   })
 
   it('addToCart adds item to cart and shows toast message', () => {
-    const { addToCart } = useProductItem()
+    const { addToCart } = useProductItem(router)
     const itemId = 1
 
     addToCart(itemId)
     expect(cartStore.addToCart).toHaveBeenCalledWith(itemId)
-    expect(toast.dismissAll).toHaveBeenCalled()
-    expect(toast.success).toHaveBeenCalledWith('Added to Cart Successfully')
+    expect(useToast()?.dismissAll).toHaveBeenCalled()
+    expect(useToast()?.success).toHaveBeenCalledWith('Added to Cart Successfully')
   })
 })

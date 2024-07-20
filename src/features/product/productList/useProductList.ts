@@ -23,8 +23,7 @@ export const useProductList = () => {
   }
 }
 
-export const useProductItem = () => {
-  const router = useRouter()
+export const useProductItem = (router : ReturnType<typeof useRouter>) => {
 
   const showDetails = async (productId: number, productName: string) => {
     const productSlug = convertToSlug(productName)

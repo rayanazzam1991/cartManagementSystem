@@ -3,13 +3,15 @@ import type { Product } from '@/products'
 import { EyeIcon, StarIcon, ShoppingBagIcon } from '@heroicons/vue/24/solid'
 import { truncateString } from '@/util/stringHelper'
 import { useProductItem } from '@/features/product/productList/useProductList'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   product: Product,
   index?: number
 }>()
+const router = useRouter()
 
-const { showDetails, addToCart } = useProductItem()
+const { showDetails, addToCart } = useProductItem(router)
 </script>
 
 <template>
