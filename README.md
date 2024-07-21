@@ -1,6 +1,6 @@
-# Car Management System
+# Cart Management System
 
-Welcome to the Car Management System repository!
+Welcome to the Cart Management System repository!
 This project is a full-stack application that allows users to manage cart,
 view product details, add products to a cart, manage the cart, and apply coupons. Currently, all operations are performed locally without any API integration.
 
@@ -56,7 +56,7 @@ view product details, add products to a cart, manage the cart, and apply coupons
 
 ## Installation
 
-To get started with the Car Management System, follow these steps:
+To get started with the Cart Management System, follow these steps:
 
 1. **Clone the repository**:
     ```bash
@@ -94,7 +94,7 @@ To get started with the Car Management System, follow these steps:
 
 ## Contributing
 
-We welcome contributions to enhance the Car Management System. If you have suggestions or improvements, please submit a pull request or open an issue.
+We welcome contributions to enhance the Cart Management System. If you have suggestions or improvements, please submit a pull request or open an issue.
 
 1. Fork the repository.
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
