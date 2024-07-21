@@ -10,8 +10,10 @@ view product details, add products to a cart, manage the cart, and apply coupons
 - [Roadmap](#roadmap)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Stack](#stack)
 - [Contributing](#contributing)
 - [License](#license)
+- [Contact](#contact)
 
 ## Features
 
@@ -83,6 +85,13 @@ To get started with the Car Management System, follow these steps:
 - **Add to Cart**: Add products to the cart either from the product list or the product details page.
 - **Manage Cart**: View your cart, adjust quantities, remove products, and apply coupons.
 
+## Stack
+
+- **Frontend Framework**: Vue.js 3.4 with TypeScript
+- **State Management**: Pinia
+- **Testing**: Vitest with Vue Test Utils and Pinia Test Plugin
+- **Package Manager**: PNPM
+
 ## Contributing
 
 We welcome contributions to enhance the Car Management System. If you have suggestions or improvements, please submit a pull request or open an issue.
@@ -96,3 +105,10 @@ We welcome contributions to enhance the Car Management System. If you have sugge
 ## License
 
 This project is licensed under the MIT License.
+
+## Contact
+
+For more information, tutorials, and updates, you can follow me on:
+
+- **LinkedIn**: [Rayan Azzam](https://www.linkedin.com/in/rayan-azzam/)
+- **YouTube**: [Rayan Azzam](https://www.youtube.com/@rayan_azzam)
